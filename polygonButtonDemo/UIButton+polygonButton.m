@@ -5,12 +5,14 @@
 //  Created by Chris Personal on 10/22/14.
 //  Copyright (c) 2014 Flouu Apps. All rights reserved.
 //
+//  inspired by "thinking like a bezier path" http://ronnqvi.st/thinking-like-a-bzier-path/
+
 
 #import "UIButton+polygonButton.h"
 
 @implementation UIButton (polygonButton)
 
-- (void)setUpPolygonForButton:(UIView *)button withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor{
+- (void)setUpPolygonForButton:(UIView *)button withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor {
     
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     
@@ -25,10 +27,9 @@
     [button.layer addSublayer:borderLayer];
 }
 
-- (UIBezierPath *)pathForView:(UIView *)view withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius lineWidth:(CGFloat)lineWidth{
-    
+- (UIBezierPath *)pathForView:(UIView *)view withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius lineWidth:(CGFloat)lineWidth {
+
     CGFloat angle = 2*M_PI/vertices;
-    
     initialAngle += M_PI;
     
     CGPoint buttonCenter = CGPointMake(view.frame.size.width/2, view.frame.size.height/2);
@@ -41,25 +42,23 @@
     CGFloat totalAngle = 0*angle + initialAngle;
     CGPoint vertex = CGPointMake(buttonCenter.x + innerRadius*cos(totalAngle), buttonCenter.y + innerRadius*sin(totalAngle));
     
-    CGFloat fix = 0;
-    CGFloat shiftX = pCornerRadius*cos(totalAngle - (angle/2 - fix));
-    CGFloat shiftY = pCornerRadius*sin(totalAngle - (angle/2 - fix));
+    CGFloat shiftX = pCornerRadius*cos(totalAngle - angle/2);
+    CGFloat shiftY = pCornerRadius*sin(totalAngle - angle/2);
     CGPoint shiftedVertex = vertex;
-    NSLog(@"shifted V: %@", NSStringFromCGPoint(shiftedVertex));
     
     shiftedVertex.x += shiftX;
     shiftedVertex.y += shiftY;
     [bezierPath moveToPoint:shiftedVertex];
     [bezierPath addArcWithCenter:vertex
                           radius:pCornerRadius
-                      startAngle:totalAngle - (angle/2 - fix)
-                        endAngle:totalAngle + (angle/2 - fix)
+                      startAngle:totalAngle - angle/2
+                        endAngle:totalAngle + angle/2
                        clockwise:YES];
     
     for (NSInteger i = 1; i < vertices; i++) {
         totalAngle = (double)i*angle + initialAngle;
-        shiftX = pCornerRadius*cos(totalAngle - (angle/2 - fix));
-        shiftY = pCornerRadius*sin(totalAngle - (angle/2 - fix));
+        shiftX = pCornerRadius*cos(totalAngle - angle/2);
+        shiftY = pCornerRadius*sin(totalAngle - angle/2);
         
         vertex = CGPointMake(buttonCenter.x + innerRadius*cos(totalAngle), buttonCenter.y + innerRadius*sin(totalAngle));
         
@@ -70,8 +69,8 @@
         [bezierPath addLineToPoint:shiftedVertex];
         [bezierPath addArcWithCenter:vertex
                               radius:pCornerRadius
-                          startAngle:totalAngle - (angle/2 - fix)
-                            endAngle:totalAngle + (angle/2 - fix)
+                          startAngle:totalAngle - angle/2
+                            endAngle:totalAngle + angle/2
                            clockwise:YES];
     }
     
@@ -84,6 +83,7 @@
 + (NSArray *)evenlySpacedGoldenRatioButtonsWith:(NSInteger)numberOfButtons width:(CGFloat)spaceWidth yPos:(CGFloat)spaceHeight  {
     //this gives position in purely frame Math way
     //an autolayout method should be made
+    
     CGFloat buttonWidth = spaceWidth/(1.303*(CGFloat)numberOfButtons + 0.3083);
     CGFloat buttonSpacing = 0.3083*buttonWidth;
     
