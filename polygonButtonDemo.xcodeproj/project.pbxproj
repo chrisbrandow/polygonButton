@@ -15,6 +15,7 @@
 		43A08B3E19EF7830004E0E4E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43A08B3D19EF7830004E0E4E /* Images.xcassets */; };
 		43A08B4119EF7830004E0E4E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43A08B3F19EF7830004E0E4E /* LaunchScreen.xib */; };
 		43A08B4D19EF7830004E0E4E /* polygonButtonDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A08B4C19EF7830004E0E4E /* polygonButtonDemoTests.m */; };
+		43A08B5819EFA520004E0E4E /* polygonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A08B5719EFA520004E0E4E /* polygonButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		43A08B4619EF7830004E0E4E /* polygonButtonDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = polygonButtonDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43A08B4B19EF7830004E0E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43A08B4C19EF7830004E0E4E /* polygonButtonDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = polygonButtonDemoTests.m; sourceTree = "<group>"; };
+		43A08B5619EFA520004E0E4E /* polygonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polygonButton.h; sourceTree = "<group>"; };
+		43A08B5719EFA520004E0E4E /* polygonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = polygonButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 				43A08B3219EF7830004E0E4E /* AppDelegate.m */,
 				43A08B3719EF7830004E0E4E /* ViewController.h */,
 				43A08B3819EF7830004E0E4E /* ViewController.m */,
+				43A08B5619EFA520004E0E4E /* polygonButton.h */,
+				43A08B5719EFA520004E0E4E /* polygonButton.m */,
 				43A08B3A19EF7830004E0E4E /* Main.storyboard */,
 				43A08B3D19EF7830004E0E4E /* Images.xcassets */,
 				43A08B3F19EF7830004E0E4E /* LaunchScreen.xib */,
@@ -223,6 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43A08B3619EF7830004E0E4E /* polygonButtonDemo.xcdatamodeld in Sources */,
+				43A08B5819EFA520004E0E4E /* polygonButton.m in Sources */,
 				43A08B3319EF7830004E0E4E /* AppDelegate.m in Sources */,
 				43A08B3919EF7830004E0E4E /* ViewController.m in Sources */,
 				43A08B3019EF7830004E0E4E /* main.m in Sources */,
