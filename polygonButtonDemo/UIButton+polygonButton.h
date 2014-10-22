@@ -10,7 +10,7 @@
 
 @interface UIButton (polygonButton)
 
-- (void)setUpPolygonForButton:(UIView *)button withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor;
+- (void)setUpPolygonForButton:(UIView *)button withVertices:(NSInteger)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor;
 
 + (NSArray *)evenlySpacedGoldenRatioButtonsWith:(NSInteger)numberOfButtons width:(CGFloat)spaceWidth yPos:(CGFloat)spaceHeight;
 

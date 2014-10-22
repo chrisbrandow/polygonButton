@@ -40,7 +40,6 @@
     NSArray *allbuttons = @[buttons, buttons2, buttons3, buttons4, buttons5];
     
     [allbuttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"obj %@", obj);
         [obj enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             UIButton *b = obj;
             [b setTitle:[NSString stringWithFormat:@"%zd", idx+1] forState:UIControlStateNormal];
@@ -77,9 +76,7 @@
         }];
 }
 
-- (void)buttonAction:(id)sender {
-    NSLog(@"you pushed button: %@", [[sender titleLabel] text]);
-    
+- (void)buttonAction:(id)sender {    
     //just for fun
     
     UIButton *b = (UIButton *)sender;

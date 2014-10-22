@@ -12,8 +12,9 @@
 
 @implementation UIButton (polygonButton)
 
-- (void)setUpPolygonForButton:(UIView *)button withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor {
+- (void)setUpPolygonForButton:(UIView *)button withVertices:(NSInteger)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor {
     
+    NSAssert(vertices > 2, @"oops, polygons must have at least 3 vertices. You requested %zd vertices", vertices);
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     
     CAShapeLayer *borderLayer = [CAShapeLayer layer];
@@ -21,7 +22,7 @@
     borderLayer.strokeColor = pBorderColor;
     borderLayer.fillColor = [UIColor clearColor].CGColor;
     borderLayer.lineJoin = kCALineJoinRound;
-    borderLayer.path = maskLayer.path = [self pathForView:button withVertices:vertices initialPointAngle:initialAngle cornerRadius:pCornerRadius lineWidth:lineWidth].CGPath;
+    borderLayer.path = maskLayer.path = [self pathForView:button withVertices:(CGFloat)vertices initialPointAngle:initialAngle cornerRadius:pCornerRadius lineWidth:lineWidth].CGPath;
     
     button.layer.mask = maskLayer;
     [button.layer addSublayer:borderLayer];
