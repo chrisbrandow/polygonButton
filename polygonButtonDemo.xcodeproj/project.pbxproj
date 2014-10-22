@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		434B6E1619F8083B0001635F /* UIButton+polygonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 434B6E1519F8083B0001635F /* UIButton+polygonButton.m */; };
 		43A08B3019EF7830004E0E4E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A08B2F19EF7830004E0E4E /* main.m */; };
 		43A08B3319EF7830004E0E4E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 43A08B3219EF7830004E0E4E /* AppDelegate.m */; };
 		43A08B3619EF7830004E0E4E /* polygonButtonDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 43A08B3419EF7830004E0E4E /* polygonButtonDemo.xcdatamodeld */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		434B6E1419F8083B0001635F /* UIButton+polygonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+polygonButton.h"; sourceTree = "<group>"; };
+		434B6E1519F8083B0001635F /* UIButton+polygonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+polygonButton.m"; sourceTree = "<group>"; };
 		43A08B2A19EF7830004E0E4E /* polygonButtonDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = polygonButtonDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43A08B2E19EF7830004E0E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43A08B2F19EF7830004E0E4E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 				43A08B3219EF7830004E0E4E /* AppDelegate.m */,
 				43A08B3719EF7830004E0E4E /* ViewController.h */,
 				43A08B3819EF7830004E0E4E /* ViewController.m */,
+				434B6E1419F8083B0001635F /* UIButton+polygonButton.h */,
+				434B6E1519F8083B0001635F /* UIButton+polygonButton.m */,
 				43A08B5619EFA520004E0E4E /* polygonButton.h */,
 				43A08B5719EFA520004E0E4E /* polygonButton.m */,
 				43A08B3A19EF7830004E0E4E /* Main.storyboard */,
@@ -229,6 +234,7 @@
 			files = (
 				43A08B3619EF7830004E0E4E /* polygonButtonDemo.xcdatamodeld in Sources */,
 				43A08B5819EFA520004E0E4E /* polygonButton.m in Sources */,
+				434B6E1619F8083B0001635F /* UIButton+polygonButton.m in Sources */,
 				43A08B3319EF7830004E0E4E /* AppDelegate.m in Sources */,
 				43A08B3919EF7830004E0E4E /* ViewController.m in Sources */,
 				43A08B3019EF7830004E0E4E /* main.m in Sources */,
@@ -422,6 +428,7 @@
 				43A08B5219EF7830004E0E4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		43A08B5319EF7830004E0E4E /* Build configuration list for PBXNativeTarget "polygonButtonDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +437,7 @@
 				43A08B5519EF7830004E0E4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

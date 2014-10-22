@@ -1,18 +1,17 @@
 //
-//  polygonButton.m
+//  UIButton+polygonButton.m
 //  polygonButtonDemo
 //
-//  Created by Chris Personal on 10/16/14.
+//  Created by Chris Personal on 10/22/14.
 //  Copyright (c) 2014 Flouu Apps. All rights reserved.
 //
 
-#import "polygonButton.h"
+#import "UIButton+polygonButton.h"
 
-@implementation polygonButton
+@implementation UIButton (polygonButton)
 
-+ (polygonButton *)polygonButtonWithFrame:(CGRect)frame withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor{
+- (void)setUpPolygonForButton:(UIView *)button withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor{
     
-    polygonButton *button = [[polygonButton alloc] initWithFrame:frame];
     CAShapeLayer *maskLayer = [CAShapeLayer layer];
     
     CAShapeLayer *borderLayer = [CAShapeLayer layer];
@@ -20,12 +19,10 @@
     borderLayer.strokeColor = pBorderColor;
     borderLayer.fillColor = [UIColor clearColor].CGColor;
     borderLayer.lineJoin = kCALineJoinRound;
-    borderLayer.path = maskLayer.path = [button pathForView:button withVertices:vertices initialPointAngle:initialAngle cornerRadius:pCornerRadius lineWidth:lineWidth].CGPath;
+    borderLayer.path = maskLayer.path = [self pathForView:button withVertices:vertices initialPointAngle:initialAngle cornerRadius:pCornerRadius lineWidth:lineWidth].CGPath;
     
     button.layer.mask = maskLayer;
     [button.layer addSublayer:borderLayer];
-    
-    return button;
 }
 
 - (UIBezierPath *)pathForView:(UIView *)view withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius lineWidth:(CGFloat)lineWidth{
@@ -82,6 +79,28 @@
     bezierPath.flatness = .3;
     bezierPath.lineWidth = lineWidth;
     return bezierPath;
+}
+
++ (NSArray *)evenlySpacedGoldenRatioButtonsWith:(NSInteger)numberOfButtons width:(CGFloat)spaceWidth yPos:(CGFloat)spaceHeight  {
+    //this gives position in purely frame Math way
+    //an autolayout method should be made
+    CGFloat buttonWidth = spaceWidth/(1.303*(CGFloat)numberOfButtons + 0.3083);
+    CGFloat buttonSpacing = 0.3083*buttonWidth;
+    
+    NSMutableArray *buttons = [NSMutableArray new];
+    
+    for (NSInteger i = 0; i < numberOfButtons; i++) {
+        UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGFloat x = floor(buttonSpacing + (CGFloat)i*(buttonSpacing + buttonWidth));
+        aButton.frame = CGRectMake(x, spaceHeight, buttonWidth, buttonWidth);
+        aButton.backgroundColor = [UIColor redColor];
+        [aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [aButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.65] forState:UIControlStateHighlighted];
+        [buttons addObject:aButton];
+    }
+    
+    return [NSArray arrayWithArray:buttons];
+    
 }
 
 @end

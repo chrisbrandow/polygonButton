@@ -7,9 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "polygonButton.h"
+#import "UIButton+polygonButton.h"
+@interface ViewController () <UICollisionBehaviorDelegate>
 
-@interface ViewController ()
+@property (nonatomic) UIDynamicAnimator *myAnimator;
 
 @end
 
@@ -19,155 +20,89 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    NSArray *buttons = [self evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:200];
-    NSArray *buttons2 = [self evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:500];
-    NSArray *buttons3 = [self evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:400];
-    NSArray *buttons4 = [self evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:300];
+    self.myAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 
-    [buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        UIButton *b = obj;
-        [b setTitle:[NSString stringWithFormat:@"%zd", idx+1] forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        b.backgroundColor = [UIColor colorWithRed:.1 green:.1 blue:.8 alpha:(2+(CGFloat)idx)/6];
-        b.layer.zPosition = -10;
-        [self setUpPolygonForButton:b withVertices:3+idx initialPointAngle:M_PI_2 cornerRadius:3 pBorderWidth:4 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.6 brightness:.8 alpha:1].CGColor];
-        
-        [self.view addSubview:b];
+    CGFloat viewHeight = self.view.frame.size.height;
+    NSMutableArray *yPos = [NSMutableArray new];
+    NSInteger numberOfRows = 5;
+    
+    for (NSInteger i = 0; i < numberOfRows; ++i) {
+        yPos[i] = @((i + 1)*viewHeight/(numberOfRows + 1));
+    }
+    
+    NSArray *buttons = [UIButton evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:[yPos[0] floatValue]];
+    NSArray *buttons2 = [UIButton evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:[yPos[1] floatValue]];
+    NSArray *buttons3 = [UIButton evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:[yPos[2] floatValue]];
+    NSArray *buttons4 = [UIButton evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:[yPos[3] floatValue]];
+    NSArray *buttons5 = [UIButton evenlySpacedGoldenRatioButtonsWith:5 width:self.view.frame.size.width yPos:[yPos[4] floatValue]];
+    
+    NSArray *allbuttons = @[buttons, buttons2, buttons3, buttons4, buttons5];
+    
+    [allbuttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"obj %@", obj);
+        [obj enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            UIButton *b = obj;
+            [b setTitle:[NSString stringWithFormat:@"%zd", idx+1] forState:UIControlStateNormal];
+            [b addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+            b.backgroundColor = [UIColor colorWithRed:.1 green:.1 blue:.8 alpha:(2+(CGFloat)idx)/6];
+            [self.view addSubview:b];
+        }];
     }];
     
-    [buttons4 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    
+    [buttons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIButton *b = obj;
-        [b setTitle:[NSString stringWithFormat:@"%zd", idx+1] forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        b.backgroundColor = [UIColor colorWithRed:.1 green:.1 blue:.8 alpha:(2+(CGFloat)idx)/6];
-        b.layer.zPosition = -10;
-        [self setUpPolygonForButton:b withVertices:5 initialPointAngle:M_PI_2 cornerRadius:3 pBorderWidth:2*(CGFloat)idx borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.6 brightness:.8 alpha:1].CGColor];
-        
-        [self.view addSubview:b];
+        [b setUpPolygonForButton:b withVertices:3+idx initialPointAngle:M_PI_2 cornerRadius:3 pBorderWidth:4 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.8 brightness:.9 alpha:1].CGColor];
+    }];
+    
+    [buttons2 enumerateObjectsUsingBlock:^(UIButton *b, NSUInteger idx, BOOL *stop) {
+        [b setUpPolygonForButton:b withVertices:4 initialPointAngle:M_PI_4 cornerRadius:(CGFloat)idx*5.0 pBorderWidth:16 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.8 brightness:.9 alpha:1].CGColor];
     }];
     
     [buttons3 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIButton *b = obj;
-        [b setTitle:[NSString stringWithFormat:@"%zd", idx+1] forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        b.backgroundColor = [UIColor colorWithRed:.1 green:.1 blue:.8 alpha:(2+(CGFloat)idx)/6];
-        b.layer.zPosition = -10;
-        [self setUpPolygonForButton:b withVertices:4 initialPointAngle:M_PI_2 cornerRadius:(CGFloat)idx*5.0 pBorderWidth:16 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.6 brightness:.8 alpha:1].CGColor];
+        [b setUpPolygonForButton:b withVertices:4 initialPointAngle:M_PI_2 cornerRadius:(CGFloat)idx*5.0 pBorderWidth:16 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.8 brightness:.9 alpha:1].CGColor];
         
-        [self.view addSubview:b];
     }];
     
-    [buttons2 enumerateObjectsUsingBlock:^(UIButton *b, NSUInteger idx, BOOL *stop) {
-//        UIButton *b = obj;
-        [b setTitle:[NSString stringWithFormat:@"%zd", idx+1] forState:UIControlStateNormal];
-        [b addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        b.backgroundColor = [UIColor colorWithRed:.1 green:.1 blue:.8 alpha:(2+(CGFloat)idx)/6];
-        b.layer.zPosition = -10;
-        [self setUpPolygonForButton:b withVertices:4 initialPointAngle:M_PI_4 cornerRadius:(CGFloat)idx*5.0 pBorderWidth:16 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.6 brightness:.8 alpha:1].CGColor];
-
-        b.layer.cornerRadius = b.layer.bounds.size.width/2;
-        [self.view addSubview:b];
+    [buttons4 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UIButton *b = obj;
+        [b setUpPolygonForButton:b withVertices:5 initialPointAngle:M_PI_2 cornerRadius:3 pBorderWidth:1+5*(CGFloat)idx borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.8 brightness:.9 alpha:1].CGColor];
     }];
+
+    [buttons5 enumerateObjectsUsingBlock:^(UIButton *b, NSUInteger idx, BOOL *stop) {
+
+        [b setUpPolygonForButton:b withVertices:5 initialPointAngle:M_PI_4 cornerRadius:(CGFloat)idx*5.0 pBorderWidth:8 borderColor:[UIColor colorWithHue:((CGFloat)idx)/5 saturation:.8 brightness:.9 alpha:1].CGColor];
+        }];
 }
 
 - (void)buttonAction:(id)sender {
     NSLog(@"you pushed button: %@", [[sender titleLabel] text]);
     
+    //just for fun
+    
+    UIButton *b = (UIButton *)sender;
+    UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[b]];
+    UIDynamicItemBehavior *itemBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[b]];
+    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[b]];
+    [collision setTranslatesReferenceBoundsIntoBoundaryWithInsets:UIEdgeInsetsMake(10, 20, 20, 20)];
+    
+    itemBehavior.elasticity = .9;
+    collision.collisionDelegate = self;
+    
+    [self.myAnimator addBehavior:gravity];
+    [self.myAnimator addBehavior:itemBehavior];
+    [self.myAnimator addBehavior:collision];
+
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (NSArray *)evenlySpacedGoldenRatioButtonsWith:(NSInteger)numberOfButtons width:(CGFloat)spaceWidth yPos:(CGFloat)spaceHeight  {
-    //this gives position in purely frame Math way
-    //an autolayout method should be made
-    CGFloat buttonWidth = spaceWidth/(1.303*(CGFloat)numberOfButtons + 0.3083);
-    CGFloat buttonSpacing = 0.3083*buttonWidth;
-    
-    NSMutableArray *buttons = [NSMutableArray new];
-    
-    for (NSInteger i = 0; i < numberOfButtons; i++) {
-        UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        CGFloat x = floor(buttonSpacing + (CGFloat)i*(buttonSpacing + buttonWidth));
-        aButton.frame = CGRectMake(x, spaceHeight, buttonWidth, buttonWidth);
-        aButton.backgroundColor = [UIColor redColor];
-        [buttons addObject:aButton];
-    }
-    
-    return [NSArray arrayWithArray:buttons];
-    
+-(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p {
+
+    [self.myAnimator removeBehavior:behavior];
 }
-
-- (void)setUpPolygonForButton:(UIView *)button withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius pBorderWidth:(CGFloat)lineWidth borderColor:(CGColorRef)pBorderColor{
-    
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    
-    CAShapeLayer *borderLayer = [CAShapeLayer layer];
-    borderLayer.lineWidth = lineWidth;
-    borderLayer.strokeColor = pBorderColor;
-    borderLayer.fillColor = [UIColor clearColor].CGColor;
-    borderLayer.lineJoin = kCALineJoinRound;
-    borderLayer.path = maskLayer.path = [self pathForView:button withVertices:vertices initialPointAngle:initialAngle cornerRadius:pCornerRadius lineWidth:lineWidth].CGPath;
-
-    button.layer.mask = maskLayer;
-    [button.layer addSublayer:borderLayer];
-}
-
-- (UIBezierPath *)pathForView:(UIView *)view withVertices:(CGFloat)vertices initialPointAngle:(CGFloat)initialAngle cornerRadius:(CGFloat)pCornerRadius lineWidth:(CGFloat)lineWidth{
-    
-    CGFloat angle = 2*M_PI/vertices;
-    
-    initialAngle += M_PI;
-    
-    CGPoint buttonCenter = CGPointMake(view.frame.size.width/2, view.frame.size.height/2);
-    CGFloat totalRadius = view.frame.size.width/2;
-    
-    CGFloat innerRadius = floor(totalRadius - pCornerRadius);
-    
-    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    
-    CGFloat totalAngle = 0*angle + initialAngle;
-    CGPoint vertex = CGPointMake(buttonCenter.x + innerRadius*cos(totalAngle), buttonCenter.y + innerRadius*sin(totalAngle));
-    
-    CGFloat fix = 0;
-    CGFloat shiftX = pCornerRadius*cos(totalAngle - (angle/2 - fix));
-    CGFloat shiftY = pCornerRadius*sin(totalAngle - (angle/2 - fix));
-    CGPoint shiftedVertex = vertex;
-    NSLog(@"shifted V: %@", NSStringFromCGPoint(shiftedVertex));
-
-    shiftedVertex.x += shiftX;
-    shiftedVertex.y += shiftY;
-    [bezierPath moveToPoint:shiftedVertex];
-    [bezierPath addArcWithCenter:vertex
-                          radius:pCornerRadius
-                      startAngle:totalAngle - (angle/2 - fix)
-                        endAngle:totalAngle + (angle/2 - fix)
-                       clockwise:YES];
-    
-    for (NSInteger i = 1; i < vertices; i++) {
-        totalAngle = (double)i*angle + initialAngle;
-        shiftX = pCornerRadius*cos(totalAngle - (angle/2 - fix));
-        shiftY = pCornerRadius*sin(totalAngle - (angle/2 - fix));
-        
-        vertex = CGPointMake(buttonCenter.x + innerRadius*cos(totalAngle), buttonCenter.y + innerRadius*sin(totalAngle));
-        
-        shiftedVertex = vertex;
-        shiftedVertex.x += shiftX;
-        shiftedVertex.y += shiftY;
-
-        [bezierPath addLineToPoint:shiftedVertex];
-        [bezierPath addArcWithCenter:vertex
-                              radius:pCornerRadius
-                          startAngle:totalAngle - (angle/2 - fix)
-                            endAngle:totalAngle + (angle/2 - fix)
-                           clockwise:YES];
-    }
-    
-    [bezierPath closePath];
-    bezierPath.flatness = .3;
-    bezierPath.lineWidth = lineWidth;
-    return bezierPath;
-}
-
 @end
