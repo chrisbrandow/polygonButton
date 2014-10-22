@@ -82,7 +82,7 @@
 
 + (NSArray *)evenlySpacedGoldenRatioButtonsWith:(NSInteger)numberOfButtons width:(CGFloat)spaceWidth yPos:(CGFloat)spaceHeight  {
     //this gives position in purely frame Math way
-    //an autolayout method should be made
+    //an autolayout method should be made -- trying to think how I want to implement that -- method that takes view and buttons -- block?
     
     CGFloat buttonWidth = spaceWidth/(1.303*(CGFloat)numberOfButtons + 0.3083);
     CGFloat buttonSpacing = 0.3083*buttonWidth;
@@ -93,14 +93,15 @@
         UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
         CGFloat x = floor(buttonSpacing + (CGFloat)i*(buttonSpacing + buttonWidth));
         aButton.frame = CGRectMake(x, spaceHeight, buttonWidth, buttonWidth);
-        aButton.backgroundColor = [UIColor redColor];
+        
+        //  Basic Default Colors
+        aButton.backgroundColor = [UIColor darkGrayColor];
         [aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [aButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.65] forState:UIControlStateHighlighted];
+        
         [buttons addObject:aButton];
     }
-    
     return [NSArray arrayWithArray:buttons];
-    
 }
 
 @end
